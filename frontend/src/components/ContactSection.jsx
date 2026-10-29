@@ -54,8 +54,9 @@ function ContactSection() {
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL?.replace(/\/+$/, '')
-        || (import.meta.env.DEV ? 'http://localhost:5050' : '');
-      const response = await fetch(`${apiUrl}/api/contact`, {
+      || (import.meta.env.DEV ? 'http://localhost:5050/api' : '');
+
+      const response = await fetch(`${apiUrl}/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
