@@ -8,11 +8,17 @@ function TerminalText({
   delay = 0,
   start = true,
   cursor = true,
+  ariaLabel,
 }) {
-  const [visibleText, setVisibleText] = useState(start ? '' : text);
+  const [visibleText, setVisibleText] = useState(text);
 
   useEffect(() => {
     if (!start) {
+      setVisibleText(text);
+      return undefined;
+    }
+
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
       setVisibleText(text);
       return undefined;
     }
@@ -39,7 +45,7 @@ function TerminalText({
   }, [delay, speed, start, text]);
 
   return (
-    <Tag className={className}>
+    <Tag className={className} aria-label={ariaLabel} aria-live={ariaLabel ? 'off' : undefined}>
       {visibleText}
       {cursor ? <span className="terminal-cursor">_</span> : null}
     </Tag>

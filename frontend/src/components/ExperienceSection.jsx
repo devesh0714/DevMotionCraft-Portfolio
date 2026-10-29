@@ -1,91 +1,42 @@
 import { motion } from 'framer-motion';
 import SectionShell from './SectionShell';
-import TerminalText from './TerminalText';
-
-const experience = [
-  {
-    role: 'Software Development Engineer Intern',
-    company: 'ITJOBXS',
-    period: '2024 - Present',
-    detail:
-      'Design and Development part of a fully responsive webpage for a particular section, Worked on User Verification/Authentication + Engineering challenges of detecting and removing the fake bots and posts, Integrated Recaptcha and other anti-bot measures to enhance security and user experience. ',
-  },
-  // {
-  //   role: 'Full Stack Developer',
-  //   company: 'SaaS Lab',
-  //   period: '2022 - 2024',
-  //   detail:
-  //     'Shipped dashboards, APIs, authentication, and developer tooling across MongoDB, Express, React, and Node.',
-  // },
-  // {
-  //   role: 'UI Engineer',
-  //   company: 'Independent',
-  //   period: '2020 - 2022',
-  //   detail:
-  //     'Designed landing systems, prototypes, and high-conversion web experiences for early-stage teams.',
-  // },
-];
+import { experiences } from '../data/portfolioData';
+import ScrollColorText from './ScrollColorText';
 
 function ExperienceSection() {
   return (
     <SectionShell
       id="experience"
       eyebrow="~/portfolio/experience"
-      title="Systems, screens, and the small details that make them feel alive."
-      description="I like frontend work where the interaction model matters as much as the data model."
+      title="Engineering work, built with teams."
+      description="Backend and full-stack experience across business automation, API security, and shared production systems."
+      scrollColor
     >
       {(isInView) => (
-        <div className="grid gap-5">
-          {experience.map((item, index) => (
+        <div className="relative grid gap-5 before:absolute before:bottom-8 before:left-3 before:top-8 before:w-px before:bg-emerald-300/20 md:gap-6">
+          {experiences.map((item, index) => (
             <motion.article
               key={`${item.role}-${item.company}`}
-              className="glass-panel rounded-lg p-5 md:grid md:grid-cols-[0.55fr_1fr] md:gap-8 md:p-7"
-              initial={{ opacity: 0, y: 34 }}
+              className="glass-panel relative rounded-lg p-5 pl-10 md:grid md:grid-cols-[0.55fr_1fr] md:gap-8 md:p-7 md:pl-12"
+              initial={{ opacity: 0, y: 24 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{
-                duration: 0.72,
-                delay: 0.25 + index * 0.12,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              whileHover={{
-                y: -6,
-                borderColor: 'rgba(190, 242, 100, 0.35)',
-              }}
+              transition={{ duration: 0.6, delay: 0.12 * index }}
             >
+              <span className="absolute left-[0.42rem] top-7 h-3 w-3 rounded-full border-2 border-lime-200 bg-[#06130d]" aria-hidden="true" />
               <div>
-                <p className="font-mono text-sm text-lime-200/80">
-                  <TerminalText
-                    text={item.period}
-                    start={isInView}
-                    delay={650 + index * 180}
-                    speed={20}
-                  />
-                </p>
-                <h3 className="mt-3 text-2xl font-semibold text-emerald-50">
-                  <TerminalText
-                    text={item.role}
-                    start={isInView}
-                    delay={760 + index * 180}
-                    speed={18}
-                  />
-                </h3>
-                <p className="mt-2 font-mono text-sm text-emerald-200/58">
-                  <TerminalText
-                    text={item.company}
-                    start={isInView}
-                    delay={900 + index * 180}
-                    speed={18}
-                  />
-                </p>
+                <p className="font-mono text-sm text-lime-200/85">{item.period}</p>
+                <ScrollColorText as="h3" className="mt-3 block text-xl font-semibold md:text-2xl">{item.role}</ScrollColorText>
+                <ScrollColorText as="p" className="mt-2 block font-mono text-sm">{item.company}</ScrollColorText>
+                {item.location ? <p className="mt-1 font-mono text-xs text-emerald-100/50">{item.location}</p> : null}
               </div>
-              <p className="mt-5 font-mono text-base leading-8 text-emerald-100/70 md:mt-0">
-                <TerminalText
-                  text={item.detail}
-                  start={isInView}
-                  delay={980 + index * 220}
-                  speed={10}
-                />
-              </p>
+              <div className="mt-5 md:mt-0">
+                <ul className="space-y-3 text-sm leading-7">
+                  {item.detail.map((point) => <li key={point} className="list-inside list-disc marker:text-lime-200/75"><ScrollColorText>{point}</ScrollColorText></li>)}
+                </ul>
+                <div className="mt-5 flex flex-wrap gap-2" aria-label={`${item.company} technologies`}>
+                  {item.technologies.map((technology) => <span key={technology} className="rounded-md border border-emerald-300/15 bg-black/25 px-2.5 py-1 font-mono text-xs text-emerald-100/70">{technology}</span>)}
+                </div>
+              </div>
             </motion.article>
           ))}
         </div>

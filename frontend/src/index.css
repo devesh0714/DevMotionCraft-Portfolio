@@ -43,17 +43,49 @@ a {
   display: inline-block;
   margin-left: 0.08rem;
   color: #bef264;
-  animation: cursor-blink 0.95s steps(2, start) infinite;
+  animation: cursor-blink 1.15s ease-in-out infinite;
 }
 
 @keyframes cursor-blink {
   0%,
-  45% {
+  55% {
     opacity: 1;
   }
-  46%,
+  56%,
   100% {
     opacity: 0;
+  }
+}
+
+.terminal-output {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.terminal-row {
+  animation: terminal-row-in 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.terminal-row:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.terminal-row:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.terminal-result {
+  color: rgba(209, 250, 229, 0.68);
+}
+
+@keyframes terminal-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -79,11 +111,11 @@ a {
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(190, 242, 100, 0.08) 48%,
+    rgba(190, 242, 100, 0.12) 48%,
     transparent 100%
   );
   transform: translateY(-100%);
-  animation: scanline-pass 4.8s ease-in-out infinite;
+  animation: scanline-pass 6.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes scanline-pass {
